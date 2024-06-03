@@ -249,7 +249,8 @@ export async function useMixin<Options = {}>(
     if (mixin.upgrade) {
       mixin.exec ||= []
       for (const up of mixin.upgrade) {
-        mixin.exec.push({
+        // Unshift in case an `exec` script relies on the dependencies.
+        mixin.exec.unshift({
           message: `Upgrading dependencies in "${up.cwd}"`,
           cmd: 'pnpm',
           args: ['up', ...up.deps],
