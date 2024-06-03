@@ -14,7 +14,7 @@ AlienStart makes it very easy to add your own integrations (referred to as "mixi
 
 If you're using the `alien-dom-starter` template, the `alien-start init` command will run automatically when you first install your project's initial dependencies.
 
-AlienStart `init` first gives you the opportunity to name your project, replacing all occurrences of the default name provided by the template. Then it will pin your project's dependencies to the latest major-minor version (using caret `^` syntax in the `package.json` files). This ensures reproducible installs for all developers on your team, while also ensuring you have the latest dependency versions available in your new project.
+AlienStart `init` first gives you the opportunity to name your project, replacing all occurrences of the default name provided by the template. Then it will pin your project's dependencies to the latest major version (using caret `^` syntax in the `package.json` files). This ensures reproducible installs for all developers on your team, while also ensuring you have the latest dependency versions available in your new project.
 
 That's it for the `init` command!
 
