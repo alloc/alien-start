@@ -2,6 +2,7 @@ import { $, execa } from 'execa'
 import { readFileSync, writeFileSync } from 'fs'
 import { bold, cyan, green, yellow } from 'kleur/colors'
 import prompts from 'prompts'
+import { PackageJson } from 'type-fest'
 import { expectCleanRepo, gitCommitAll } from './util/git'
 import { fatal, info } from './util/log'
 import { readPackageData, writePackageData } from './util/package'
@@ -63,6 +64,8 @@ export async function init() {
     pkg.name = name
   }
 
+  await installUtilityLib(pkg)
+
   delete pkg.scripts.prepare
   await writePackageData(pkg)
 
@@ -93,5 +96,42 @@ async function findAndReplace(pattern: string, replacement: string) {
     info(
       `Found and replaced ${yellow(pattern)} with ${green(replacement)} in ${file}`
     )
+  }
+}
+
+async function installUtilityLib(pkg: PackageJson) {
+  const { selection }: { selection: Record<string, string> } = await prompts({
+    name: 'selection',
+    type: 'select',
+    message: 'Want to use a utility library?',
+    choices: [
+      {
+        title: 'No thanks',
+        value: {},
+      },
+      {
+        title: 'Radash',
+        description: 'https://radash-docs.vercel.app/docs/getting-started',
+        value: { radash: 'latest' },
+      },
+      {
+        title: 'fp-ts',
+        description: 'https://gcanti.github.io/fp-ts/',
+        value: { 'fp-ts': 'latest' },
+      },
+      {
+        title: 'Lodash',
+        description: '(lodash-es) https://lodash.com/',
+        value: { lodash: 'npm:lodash-es' },
+      },
+    ],
+  })
+
+  if (selection == null) {
+    process.exit()
+  }
+
+  for (const key in selection) {
+    pkg.dependencies![key] = selection[key]
   }
 }
