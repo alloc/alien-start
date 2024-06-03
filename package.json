@@ -1,7 +1,7 @@
 {
   "name": "alien-start",
   "type": "module",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "Bootstrap your project with useful tools.",
   "bin": {
     "alien-start": "dist/cli.js"
