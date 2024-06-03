@@ -11,14 +11,6 @@ import { which, whichRequire } from './util/which'
 export async function init() {
   await expectCleanRepo()
 
-  const pkg = readPackageData()
-  if (!pkg.scripts?.prepare?.includes('alien-start init')) {
-    fatal(
-      'You cannot run "alien-start init" except in a prepare script.\n' +
-        'This command is meant for bootstrapping a new project cloned from a template with alien-start installed.'
-    )
-  }
-
   let skipRename = false
   if (!(await which('rg'))) {
     info(
@@ -44,6 +36,9 @@ export async function init() {
     skipRename = skip === true
   }
 
+  const pkg = readPackageData()
+  let pkgChanged = false
+
   if (!skipRename) {
     if (!pkg.name) {
       fatal('Package "name" is missing from package.json')
@@ -61,13 +56,19 @@ export async function init() {
 
     name = name.toLowerCase().replace(/\s/g, '-')
     await findAndReplace(pkg.name, name)
+
     pkg.name = name
+    pkgChanged = true
   }
 
-  await installUtilityLib(pkg)
+  const utilityLibInstalled = await installUtilityLib(pkg)
+  if (utilityLibInstalled) {
+    pkgChanged = true
+  }
 
-  delete pkg.scripts.prepare
-  await writePackageData(pkg)
+  if (pkgChanged) {
+    await writePackageData(pkg)
+  }
 
   info('\nPinning dependencies to current major versions...')
   await execa('pnpm', ['-r', 'up', '-L'], { stdio: 'inherit' })
@@ -134,4 +135,6 @@ async function installUtilityLib(pkg: PackageJson) {
   for (const key in selection) {
     pkg.dependencies![key] = selection[key]
   }
+
+  return Object.keys(selection).length > 0
 }
