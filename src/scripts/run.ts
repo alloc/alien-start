@@ -1,8 +1,11 @@
 import { spawn } from 'child_process'
 import { execa } from 'execa'
 import fs from 'fs'
-import { dim, yellow } from 'kleur/colors'
+import { blue, cyan, green, magenta, yellow } from 'kleur/colors'
 import path from 'path'
+
+const colors = [yellow, green, blue, cyan, magenta]
+let nextColor = 0
 
 export async function runScripts(
   root: string,
@@ -24,7 +27,8 @@ export async function runScripts(
     for (let file of fs.readdirSync(root)) {
       const ext = path.extname(file)
       const name = path.basename(file, ext)
-      const logPrefix = name !== 'pnpm' ? dim(yellow(`${name}: `)) : null
+      const logPrefix =
+        name !== 'pnpm' ? colors[nextColor++](name) + ': ' : null
 
       file = path.join(root, file)
       if (isDirectory(file)) {
@@ -50,7 +54,9 @@ export async function runScripts(
             const child = spawn(cmd, argv, { stdio: 'pipe' })
             child.stdout.setEncoding('utf-8')
             child.stdout.on('data', (data: string) => {
-              process.stdout.write(data.replace(/^/gm, logPrefix))
+              process.stdout.write(
+                data.trimEnd().replace(/^/gm, logPrefix) + '\n'
+              )
             })
             child.stderr.setEncoding('utf-8')
             child.stderr.on('data', (data: string) => {
