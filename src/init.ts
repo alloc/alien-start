@@ -132,9 +132,11 @@ async function installUtilityLib(pkg: PackageJson) {
     process.exit()
   }
 
-  for (const key in selection) {
-    pkg.dependencies![key] = selection[key]
+  if (Object.keys(selection).length > 0) {
+    pkg.dependencies ||= {}
+    for (const key in selection) {
+      pkg.dependencies[key] = selection[key]
+    }
+    return true
   }
-
-  return Object.keys(selection).length > 0
 }
