@@ -1,5 +1,5 @@
 import { $, execa } from 'execa'
-import { info } from './log'
+import { fatal, info } from './log'
 
 export async function gitCommitAll(message: string) {
   info('\nSaving changes...')
@@ -17,4 +17,13 @@ export async function gitResetHard(commit?: string) {
 
 export async function gitHead() {
   return (await execa('git', ['rev-parse', 'HEAD'])).stdout
+}
+
+export async function expectCleanRepo() {
+  const { stdout } = await $`git status --porcelain`
+  if (stdout.trim()) {
+    fatal(
+      'Please commit or stash your changes before running "alien-start use".'
+    )
+  }
 }
