@@ -76,7 +76,7 @@ export default defineMixin<Options>(async (_ctx, options): Promise<Mixin> => {
     name: 'unocss',
     packages: {
       web: {
-        dependencies: {
+        devDependencies: {
           '@unocss/vite': '*',
         },
       },
