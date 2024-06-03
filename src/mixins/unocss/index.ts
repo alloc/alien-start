@@ -41,8 +41,6 @@ export default defineMixin<Options>(async (_ctx, options): Promise<Mixin> => {
     },
   })
 
-  console.log('options', options)
-
   const imports = [`import { defineConfig } from '@unocss/vite'`]
   const presets = options.presets
     ?.map(preset => {
