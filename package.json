@@ -17,6 +17,10 @@
     "build": "tsup-node --clean",
     "prepare": "pnpm -s build"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alloc/alien-start.git"
+  },
   "prettier": "@alloc/prettier-config",
   "devDependencies": {
     "@alloc/prettier-config": "^1.0.0",
