@@ -68,7 +68,11 @@ export default defineMixin<Options>(async (_ctx, options): Promise<Mixin> => {
     ${imports.join('\n')}
 
     export default defineConfig({
-      include: [${include}],${presets ? `\n  presets: [${presets}],` : ''}
+      content: {
+        pipeline: {
+          include: [${include}],${presets ? `\n  presets: [${presets}],` : ''}
+        },
+      },
     })
   `
 
