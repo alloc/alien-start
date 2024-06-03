@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@alien-dom/router": "latest",
+    "@hattip/adapter-bun": "latest",
+    "@hattip/adapter-node": "latest",
+    "@hattip/compose": "latest",
+    "@types/bun": "latest",
+    "@types/node": "latest",
+    "@unocss/vite": "latest",
+    "alien-dom": "^0.12.0"
+  }
+}

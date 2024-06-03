@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "lib": ["dom"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "alien-dom"
+  }
+}
