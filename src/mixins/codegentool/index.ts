@@ -34,7 +34,7 @@ export default defineMixin(ctx => ({
   workspace: {
     packages: ['generators'],
     devDependencies: {
-      codegentool: 'npm:@alloc/codegentool@*',
+      '@alloc/codegentool': 'latest',
     },
     updatePackage: pkg => {
       pkg.codegentool = {
