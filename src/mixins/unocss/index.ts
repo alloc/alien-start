@@ -95,7 +95,7 @@ export default defineMixin<Options>(async (_ctx, options): Promise<Mixin> => {
     },
     files: [
       {
-        name: 'unocss.config.ts',
+        name: 'web/unocss.config.ts',
         content: config,
       },
     ],
