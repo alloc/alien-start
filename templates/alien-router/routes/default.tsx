@@ -1,7 +1,7 @@
 import { defineRoute } from '@alien-dom/router'
 
 export default defineRoute({
-  path: '/*',
+  path: '/(.*)',
   title: 'Page Not Found',
   component: function DefaultRoute() {
     return (
